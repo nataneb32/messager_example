@@ -1,0 +1,32 @@
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script>
+  var socket = io();  
+  socket.emit('chat send', {username: "nataneb" , body: "test"})
+  socket.on('chat message', (msg) => {
+    $('#messages').append($('<div>').text(msg.username + ": " + msg.body));
+  })
+  
+  $( document ).ready(() => {
+  $('#send_btn').click(() => {
+    socket.emit('chat send', {
+      username: $('#username_input').val(),
+      body: $('#send_input').val()
+      })
+  })
+  })
+
+</script>
+<div class="app">
+<div id="messages" class="msg_container">
+</div>
+
+<div class="bar">
+  Username: 
+  <input id="username_input" type="text" class="msg_input"/>
+  <input id="send_input" type="text" class="msg_input"/>
+  <button id="send_btn">Send</button>
+</div>
+</div>
