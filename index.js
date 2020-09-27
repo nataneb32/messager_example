@@ -21,6 +21,9 @@ io.on('connection', (socket) => {
     console.log('desconectado')
   })
   socket.on('chat send', (msg) => {
+    if(!msg.username | !msg.body) {
+      return
+    }
     io.emit('chat message', msg)
   })
 })
