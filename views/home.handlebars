@@ -3,12 +3,16 @@
 
 <script>
   var socket = io();
-  socket.emit('chat send', { username: "nataneb", body: "test" })
   socket.on('chat message', (msg) => {
+    $("#messages").animate({ scrollTop: $(this).height() }, "slow");
     $('#messages').append($('<div>').text(msg.username + ": " + msg.body));
   })
+  
+  
 
   $(document).ready(() => {
+    $("#messages").animate({ scrollTop: $(this).height() }, "slow");
+    
     $('#send_btn').click(() => {
       socket.emit('chat send', {
         username: $('#username_input').val(),
@@ -45,6 +49,11 @@
   </div>
   <div class="hiddenscroll">
     <div id="messages" class="msg_container">
+      {{#renderMsgs oldMsgs }}
+      <div>
+          {{@username}}: {{@body}}
+       </div>
+       {{/renderMsgs}}
     </div>
   </div>
 
